@@ -1,0 +1,20 @@
+# Here are variables related to the Tomcat installation
+
+http_port: 8080
+https_port: 8081
+
+# This will configure a default manager-gui user:
+
+admin_username: admin
+admin_password: adminsecret
+
+#MySQL DB variables:
+
+DB_HOST: app-replatform-test-db-master.cvlvbu3tfq9g.ap-south-1.rds.amazonaws.com
+DB_PASSWORD: sbikkasani
+DB_USER: sbikkasani
+DB_PORT: 3306
+DB_NAME: mysqldb
+DB_DRIVER: mysql
+DB_DCLASS: com.mysql.jdbc.Driver
+path_to_my_sql_files: /tmp

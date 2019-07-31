@@ -1,0 +1,35 @@
+---
+- hosts: tomcat-servers
+  remote_user: ec2-user
+  become: yes
+  vars_files:
+  - tomcat-servers
+  tasks:
+  - name : Modify password - UR
+    shell : sed -i "s/String dbpassword = .*/String dbpassword = \"{{DB_PASSWORD}}\"; /" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/userRegistration.jsp
+
+  - name : Modify username - UR
+    shell : sed -i "s/String dbuser = .*/String dbuser = \"{{DB_USER}}\"; /" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/userRegistration.jsp
+
+  - name : Modify driver - UR
+    shell : sed -i "s/String dbdriver = .*/String dbdriver = \"{{ DB_DCLASS }}\";/" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/userRegistration.jsp
+
+  - name : Modify connection string - UR
+    shell : sed -i "s/String dbconnection = .*/String dbconnection = \"jdbc\:{{ DB_DRIVER }}\:\/\/{{DB_HOST}}\:{{DB_PORT}}\/{{DB_NAME}}\";/" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/userRegistration.jsp
+
+  - name : Modify password - Login
+    shell : sed -i "s/String dbpassword = .*/String dbpassword = \"{{DB_PASSWORD}}\"; /" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/login.jsp
+
+  - name : Modify username - Login
+    shell : sed -i "s/String dbuser = .*/String dbuser = \"{{DB_USER}}\"; /" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/login.jsp
+
+  - name : Modify driver - Login
+    shell : sed -i "s/String dbdriver = .*/String dbdriver = \"{{ DB_DCLASS }}\";/" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/login.jsp
+
+  - name : Modify connection string - Login
+    shell : sed -i "s/String dbconnection = .*/String dbconnection = \"jdbc\:{{ DB_DRIVER }}\:\/\/{{DB_HOST}}\:{{DB_PORT}}\/{{DB_NAME}}\";/" /opt/apache-tomcat-7.0.91/webapps/LoginWebApp/login.jsp
+
+  # Restart tomcat
+  - name: Restart tomcat
+    service: name=tomcat state=restarted
+

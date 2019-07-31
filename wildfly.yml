@@ -1,0 +1,16 @@
+---
+# This playbook deploys a simple standalone JBOSS server.
+
+- hosts: jboss-servers
+  vars :
+    http_port: 8080
+    https_port: 8081
+    admin_username: admin
+    admin_password: adminsecret
+  remote_user: ec2-user
+  become: yes
+  become_method: sudo
+
+  roles:
+    - wildfly
+    - deploy-wildfly
